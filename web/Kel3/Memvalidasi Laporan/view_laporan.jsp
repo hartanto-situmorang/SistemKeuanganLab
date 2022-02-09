@@ -5,7 +5,7 @@
     try {
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn = DriverManager.getConnection(host, "root", "");
-        String query = "select * from laporan";
+        String query = "select * from laporan ORDER BY baca asc";
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
         rs = stmt.executeQuery(query);

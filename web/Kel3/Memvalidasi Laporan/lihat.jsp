@@ -11,7 +11,7 @@
         Connection conn = DriverManager.getConnection(host, "root", "");
         if (conn != null) {
             if (id != null) {
-                PreparedStatement pst = conn.prepareStatement("update laporan set baca=1 where id='" + id + "'");
+                PreparedStatement pst = conn.prepareStatement("update laporan set baca='1' where id='" + id + "'");
                 pst.executeUpdate();
             }
         }
@@ -39,7 +39,7 @@
             </div>
             <div>
                 <embed src="<%=nama%>" type="application/pdf" width="100%" height="1000px">
-            </div>            
+            </div>            fo
         </div>
 
         <form action="verifikasi.jsp" method="POST" >

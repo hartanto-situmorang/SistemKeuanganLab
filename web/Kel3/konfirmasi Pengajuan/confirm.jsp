@@ -16,7 +16,7 @@
         if (conn != null) {
             if (id != null) {
                 if (status.equalsIgnoreCase("terima")) {
-                    PreparedStatement pst = conn.prepareStatement("update form_pengajuan set ket=1 where id='" + id + "'");
+                    PreparedStatement pst = conn.prepareStatement("update form_pengajuan set ket=1,status=terima where id='" + id + "'");
                     PreparedStatement pst2 = conn.prepareStatement("INSERT INTO notifikasi values(?,?,?,?,?)");
                     pst.executeUpdate();
                     status = "terima";
@@ -28,8 +28,8 @@
                     pst2.executeUpdate();
                     pst.close();
                     pst2.close();
-                } else if (status.equalsIgnoreCase("terima")) {
-                    PreparedStatement pst = conn.prepareStatement("update form_pengajuan set ket=3 where id='" + id + "'");
+                } else if (status.equalsIgnoreCase("tolak")) {
+                    PreparedStatement pst = conn.prepareStatement("update form_pengajuan set ket=2,status=tolak where id='" + id + "'");
                     PreparedStatement pst2 = conn.prepareStatement("INSERT INTO notifikasi values(?,?,?,?,?)");
                     pst.executeUpdate();
                     status = "tolak";

@@ -5,7 +5,7 @@
     try {
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn = DriverManager.getConnection(host, "root", "");
-        String query = "select id,id_kalab,nama_barang,jumlah_barang,deskripsi,ket,DATE_FORMAT(tanggal_pengajuan,'%d %M %Y') as tanggal,status from form_pengajuan";
+        String query = "select id,id_kalab,nama_barang,jumlah_barang,deskripsi,ket,DATE_FORMAT(tanggal_pengajuan,'%d %M %Y') as tanggal,status from form_pengajuan ORDER by CASE WHEN status = 'penting' THEN 1 WHEN status = 'segera' THEN 2 ELSE 3 END;";
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
         rs = stmt.executeQuery(query);
@@ -159,7 +159,7 @@
                                                         <th>Nama Barang</th>
                                                         <th style="width: 120px">Jumlah Barang</th>
                                                         <th style="width: 150px">Tanggal Pengajuan</th>
-                                                        <th style="width: 250px">Deskripsi</th>
+                                                        <th style="width: 200px">Deskripsi</th>
                                                         <th>Status</th>
                                                         <th>Aksi</th>
                                                     </tr>
