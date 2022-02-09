@@ -9,9 +9,6 @@
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
         rs = stmt.executeQuery(query);
-
-        String query2 = "select * from kalab";
-        Statement stmt2 = conn.createStatement();
 %>    
 <html lang="en">
     <head>
@@ -55,7 +52,7 @@
                 <hr class="sidebar-divider">
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="view_Konfirmasi.jsp">
+                    <a class="nav-link" href="../konfirmasi Pengajuan/view_Konfirmasi.jsp">
                         <i class="fas fa-fw fa-list"></i>
                         <span>List Pengajuan</span></a>
                 </li>
@@ -63,7 +60,7 @@
                 <hr class="sidebar-divider">
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="view_laporan.jsp">
+                    <a class="nav-link" href="../Memvalidasi Laporan/view_laporan.jsp">
                         <i class="fas fa-fw fa-file-pdf"></i>
                         <span>LPJ</span></a>
                 </li>
@@ -117,57 +114,6 @@
                             </li>
 
 
-                            <!-- Notifikasi-->
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-bell fa-fw"></i>
-                                    <!-- Counter - Alerts -->
-                                    <span class="badge badge-danger badge-counter">3+</span>
-                                </a>
-                                <!-- Dropdown - Alerts -->
-                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                     aria-labelledby="alertsDropdown">
-                                    <h6 class="dropdown-header">
-                                        Notikasi Terbaru
-                                    </h6>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="mr-3">
-                                            <div class="icon-circle bg-primary">
-                                                <i class="fas fa-file-alt text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="small text-gray-500">December 12, 2019</div>
-                                            <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="mr-3">
-                                            <div class="icon-circle bg-success">
-                                                <i class="fas fa-donate text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="small text-gray-500">December 7, 2019</div>
-                                            $290.29 has been deposited into your account!
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="mr-3">
-                                            <div class="icon-circle bg-warning">
-                                                <i class="fas fa-exclamation-triangle text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="small text-gray-500">December 2, 2019</div>
-                                            Spending Alert: We've noticed unusually high spending for your account.
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                </div>
-                            </li>
-                            <div class="topbar-divider d-none d-sm-block"></div>
 
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
@@ -217,9 +163,9 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table" id="dataTable" width="100%" cellspacing="0" >
+                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                 <thead>
-                                                    <tr style="background:linear-gradient(90deg, rgba(11,114,129,1) 0%, rgba(124,0,81,1) 100%) ; color: white">
+                                                    <tr style="background-color: #007bff ; color: white">
                                                         <th style="width: 50px">No</th>
                                                         <th >Nama KaLab</th>
                                                         <th>Keterangan</th>
@@ -240,22 +186,22 @@
                                                     <% int i = 1;
                                                         while (rs.next()) {
                                                     %>
-                                                    <tr style="background: <% if (rs.getString("baca").equalsIgnoreCase("0")) {
-                                                        %>linear-gradient(332deg, rgba(232,232,232,1) 0%, rgba(174,173,180,1) 100%); color: black;<%
-                                                            }
-                                                        %>">
+                                                    <tr style="background: <%
+                                                        if (rs.getString("baca").equalsIgnoreCase("0")) {
+                                                        %>#fcebeb;font-weight: bold; color: black;
+                                                        <%}%>">
                                                         <td style="text-align: center"><%=i%><% i++;%></td>
                                                         <td>
                                                             <%
+                                                                String query2 = "select * from kalab where id_kalab='"+rs.getString("id_kalab")+"'";
+                                                                Statement stmt2 = conn.createStatement();
                                                                 ResultSet rs2 = null;
                                                                 rs2 = stmt2.executeQuery(query2);
                                                                 while (rs2.next()) {
-                                                                    if (rs.getString("id_kalab").equals(rs2.getString("id_kalab"))) {
                                                             %>
                                                             <%=rs2.getString("nama_kalab")%>
                                                             <%
                                                                     }
-                                                                }
                                                             %>
                                                         </td>
                                                         <td>
@@ -275,32 +221,30 @@
                                                         </td>
                                                         <td>
                                                             <a class="btn btn-primary" href="verifikasi.jsp?id=<%=rs.getString("id")%>&status=verified">Verified</a>
-                                                            <a  style="margin-left: 10px"class="btn btn-danger" data-toggle="modal" data-target="#<%=rs.getString("id")%>">Test</a>
-                                                            <a  style="margin-left: 10px"class="btn btn-danger" href="verifikasi.jsp?id=<%=rs.getString("id")%>&status=Unverified">Unverified</a>
+                                                            <a  style="margin-left: 10px;color: white" class="btn btn-danger" data-toggle="modal" data-target="#<%=rs.getString("id")%>">Unverified</a>
                                                         </td>
-                                                    </tr>
-                                                <form action="verifikasi.jsp" method="POST" enctype="multipart/form-data">
-                                                    <div class="modal fade" id="<%=rs.getString("id")%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
+                                                <div class="modal fade" id="<%=rs.getString("id")%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <form action="verifikasi.jsp" method="POST" >
                                                                     <h5 class="modal-title" id="exampleModalLabel">Komentar</h5>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <input type="hidden" name="id" value="<%=rs.getString("id")%>">
-                                                                    <input type="hidden" name="status" value="Unverified">
-                                                                    <textarea type="text" style="width: 100%; height: 150px" name="komentar"></textarea>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button value="submit" type="submit" class="btn btn-primary">Unverified</button>
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                                                </div>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="id" value="<%=rs.getString("id")%>">
+                                                                <input type="hidden" name="status" value="unverified">
+                                                                <textarea type="text" style="width: 100%; height: 150px" name="komentar"></textarea>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button value="submit" type="submit" class="btn btn-primary">Unverified</button>
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
                                                 </form>
                                                 <%
                                                     }
@@ -356,30 +300,22 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Bootstrap core JavaScript-->
             <script src=" ../assest/vendor/jquery/jquery.min.js"></script>
             <script src=" ../assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
             <!-- Core plugin JavaScript-->
             <script src=" ../assest/vendor/jquery-easing/jquery.easing.min.js"></script>
-
             <!-- Custom scripts for all pages-->
             <script src="js/sb-admin-2.min.js"></script>
-
             <!-- Page level plugins -->
             <script src=" ../assest/vendor/datatables/jquery.dataTables.min.js"></script>
             <script src=" ../assest/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-            <!-- Page level custom scripts -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
             <script src="../assest/js/demo/datatables-demo.js"></script>
+            <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>--> 
             <%
                     rs.close();
                     stmt.close();
-//                    rs2.close();
-//                    stmt2.close();
                     conn.close();
                 } catch (SQLException ex) {
                     out.print("Gagal Koneksi");
@@ -388,5 +324,4 @@
                 }
             %>
     </body>
-
 </html>

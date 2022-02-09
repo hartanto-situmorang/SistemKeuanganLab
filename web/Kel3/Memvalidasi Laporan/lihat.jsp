@@ -35,11 +35,38 @@
         <div style="margin: 20px 30px 20px 30px" class="container-lg">
             <div style="text-align: right; margin: 30px">
                 <a class="btn btn-primary" href="verifikasi.jsp?id=<%=id%>&status=verified">Verified</a>
-                <a  style="margin-left: 10px"class="btn btn-danger" href="verifikasi.jsp?id=<%=id%>&status=Unverified">Unverified</a>
+                <a  style="margin-left: 10px;color: white" class="btn btn-danger" data-toggle="modal" data-target="#modal">Unverified</a>
             </div>
             <div>
                 <embed src="<%=nama%>" type="application/pdf" width="100%" height="1000px">
             </div>            
         </div>
+
+        <form action="verifikasi.jsp" method="POST" >
+            <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Komentar</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" value="<%=id%>">
+                            <input type="hidden" name="status" value="unverified">
+                            <textarea type="text" style="width: 100%; height: 150px" name="komentar"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button value="submit" type="submit" class="btn btn-primary">Unverified</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
 </html>

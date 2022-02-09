@@ -15,26 +15,28 @@
             if (id != null) {
                 if (status.equalsIgnoreCase("verified")) {
                     PreparedStatement pst = conn.prepareStatement("update laporan set status=1 where id='" + id + "'");
+                    PreparedStatement pst2 = conn.prepareStatement("INSERT INTO notifikasi_laporan values(?,?,?,?)");
                     pst.executeUpdate();
-                    pst.close();
                     status = "verified";
-                    PreparedStatement pst2 = conn.prepareStatement("INSERT INTO notikasi_laporan values(?,?,?,?)");
                     pst2.setString(1, id_notifikasi);
                     pst2.setString(2, status);
                     pst2.setString(3, komentar);
                     pst2.setString(4, id);
                     pst2.executeUpdate();
+                    pst.close();
+                    pst2.close();
                 } else if (status.equalsIgnoreCase("unverified")) {
                     PreparedStatement pst = conn.prepareStatement("update laporan set status=2 where id='" + id + "'");
+                    PreparedStatement pst2 = conn.prepareStatement("INSERT INTO notifikasi_laporan values(?,?,?,?)");
                     pst.executeUpdate();
-                    pst.close();
                     status = "Unverified";
-                    PreparedStatement pst2 = conn.prepareStatement("INSERT INTO notikasi_laporan values(?,?,?,?)");
                     pst2.setString(1, id_notifikasi);
                     pst2.setString(2, status);
                     pst2.setString(3, komentar);
                     pst2.setString(4, id);
                     pst2.executeUpdate();
+                    pst.close();
+                    pst2.close();
                 }
                 response.sendRedirect("view_laporan.jsp");
             }
@@ -44,6 +46,7 @@
     } catch (SQLException ex) {
         out.print("Gagal Koneksi");
     } catch (Exception ex) {
+        out.println("gagal");
         out.print(ex.getMessage());
     }
 %>
