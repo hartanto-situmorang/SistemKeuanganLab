@@ -13,11 +13,11 @@
         Connection conn = DriverManager.getConnection(host, "root", "");
         if (conn != null) {
             if (id != null) {
-                if (status.equalsIgnoreCase("verified")) {
+                if (status.equalsIgnoreCase("terima")) {
                     PreparedStatement pst = conn.prepareStatement("update laporan set status=1 where id='" + id + "'");
                     PreparedStatement pst2 = conn.prepareStatement("INSERT INTO notifikasi_laporan values(?,?,?,?)");
                     pst.executeUpdate();
-                    status = "verified";
+                    status = "terima";
                     pst2.setString(1, id_notifikasi);
                     pst2.setString(2, status);
                     pst2.setString(3, komentar);
@@ -25,11 +25,11 @@
                     pst2.executeUpdate();
                     pst.close();
                     pst2.close();
-                } else if (status.equalsIgnoreCase("unverified")) {
+                } else if (status.equalsIgnoreCase("tolak")) {
                     PreparedStatement pst = conn.prepareStatement("update laporan set status=2 where id='" + id + "'");
                     PreparedStatement pst2 = conn.prepareStatement("INSERT INTO notifikasi_laporan values(?,?,?,?)");
                     pst.executeUpdate();
-                    status = "Unverified";
+                    status = "tolak";
                     pst2.setString(1, id_notifikasi);
                     pst2.setString(2, status);
                     pst2.setString(3, komentar);

@@ -34,8 +34,8 @@
     <body>
         <div style="margin: 20px 30px 20px 30px" class="container-lg">
             <div style="text-align: right; margin: 30px">
-                <a class="btn btn-primary" href="verifikasi.jsp?id=<%=id%>&status=verified">Verified</a>
-                <a  style="margin-left: 10px;color: white" class="btn btn-danger" data-toggle="modal" data-target="#modal">Unverified</a>
+                <a class="btn btn-primary" href="verifikasi.jsp?id=<%=id%>&status=terima">Terima</a>
+                <a  style="margin-left: 10px;color: white" class="btn btn-danger" data-toggle="modal" data-target="#modal">Tolak</a>
             </div>
             <div>
                 <embed src="<%=nama%>" type="application/pdf" width="100%" height="1000px">
@@ -54,11 +54,11 @@
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="id" value="<%=id%>">
-                            <input type="hidden" name="status" value="unverified">
+                            <input type="hidden" name="status" value="tolak">
                             <textarea type="text" style="width: 100%; height: 150px" name="komentar"></textarea>
                         </div>
                         <div class="modal-footer">
-                            <button value="submit" type="submit" class="btn btn-primary">Unverified</button>
+                            <button value="submit" type="submit" class="btn btn-primary">Tolak</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         </div>
                     </div>

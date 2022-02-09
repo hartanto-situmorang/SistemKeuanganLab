@@ -5,7 +5,7 @@
     try {
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn = DriverManager.getConnection(host, "root", "");
-        String query = "select id_kalab,nama_barang,jumlah_barang,deskripsi,ket,DATE_FORMAT(tanggal_pengajuan,'%d %M %Y') as tanggal,status from form_pengajuan";
+        String query = "select id,id_kalab,nama_barang,jumlah_barang,deskripsi,ket,DATE_FORMAT(tanggal_pengajuan,'%d %M %Y') as tanggal,status from form_pengajuan";
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
         rs = stmt.executeQuery(query);
@@ -23,10 +23,7 @@
         <link href="../assest/css/sb-admin-2.min.css" rel="stylesheet">
         <link rel="icon" type="image/png" href="../assest/img/file.svg" />
         <link href=" ../assest/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
     </head>
-
-
     <body id="page-top">
         <!-- Page Wrapper -->
         <div id="wrapper">
@@ -182,6 +179,7 @@
                                                 <tbody>
                                                     <% int i = 1;
                                                         while (rs.next()) {
+                                                            if (rs.getString("ket").equalsIgnoreCase("0")) {
                                                     %>
                                                     <tr>
                                                         <td style="text-align: center"><%=i%><% i++;%></td>
@@ -217,13 +215,38 @@
 
                                                             </p></td>
                                                         <td>
-                                                            <a class="btn btn-success">Setujui</a>
-                                                            <a class="btn btn-danger">Tolak</a>
+                                                            <a class="btn btn-primary" href="confirm.jsp?id=<%=rs.getString("id")%>&status=terima">Setujui</a>
+                                                            <a  style="margin-left: 10px;color: white" class="btn btn-danger" data-toggle="modal" data-target="#<%=rs.getString("id")%>">Tolak</a>
                                                         </td>
                                                     </tr>
-                                                    <%
+                                                <div class="modal fade" id="<%=rs.getString("id")%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <form action="confirm.jsp" method="POST" >
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Komentar</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="id" value="<%=rs.getString("id")%>">
+                                                                <input type="hidden" name="nama_barang" value="<%=rs.getString("nama_barang")%>">
+                                                                <input type="hidden" name="status" value="tolak">
+                                                                <textarea type="text" style="width: 100%; height: 150px" name="komentar"></textarea>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button value="submit" type="submit" class="btn btn-primary">Submit</button>
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </form>
+                                                <%
                                                         }
-                                                    %>
+                                                    }
+                                                %>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -274,11 +297,8 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Bootstrap core JavaScript-->
             <script src=" ../assest/vendor/jquery/jquery.min.js"></script>
             <script src=" ../assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
             <!-- Core plugin JavaScript-->
             <script src=" ../assest/vendor/jquery-easing/jquery.easing.min.js"></script>
             <!-- Custom scripts for all pages-->
@@ -286,9 +306,10 @@
             <!-- Page level plugins -->
             <script src=" ../assest/vendor/datatables/jquery.dataTables.min.js"></script>
             <script src=" ../assest/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-            <!-- Page level custom scripts -->
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
             <script src="../assest/js/demo/datatables-demo.js"></script>
+            <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>--> 
             <%
                     rs.close();
                     stmt.close();

@@ -193,7 +193,7 @@
                                                         <td style="text-align: center"><%=i%><% i++;%></td>
                                                         <td>
                                                             <%
-                                                                String query2 = "select * from kalab where id_kalab='"+rs.getString("id_kalab")+"'";
+                                                                String query2 = "select * from kalab where id_kalab='" + rs.getString("id_kalab") + "'";
                                                                 Statement stmt2 = conn.createStatement();
                                                                 ResultSet rs2 = null;
                                                                 rs2 = stmt2.executeQuery(query2);
@@ -201,27 +201,18 @@
                                                             %>
                                                             <%=rs2.getString("nama_kalab")%>
                                                             <%
-                                                                    }
+                                                                }
                                                             %>
                                                         </td>
-                                                        <td>
-                                                            <%
-                                                                if (rs.getString("status").equals("1")) {
-                                                                    out.println("<b>Disetujui<b>");
-                                                                } else if (rs.getString("status").equals("2")) {
-                                                                    out.println("Ditolak");
-                                                                } else {
-                                                                    out.println("<b>Tidak Ada Keterangan</b>");
-                                                                }
-                                                            %></td>
+                                                        <td><%=rs.getString("status") %></td>
                                                         <td>
                                                             <a class="btn btn-primary" style=" padding: 0px 5px 0px 5px;text-decoration: none; color: white" href="lihat.jsp?fname=<%=rs.getString("nama_file")%>&ket=1&id=<%=rs.getString("id")%>" target="_blank">
                                                                 <%=rs.getString("nama_file")%>
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a class="btn btn-primary" href="verifikasi.jsp?id=<%=rs.getString("id")%>&status=verified">Verified</a>
-                                                            <a  style="margin-left: 10px;color: white" class="btn btn-danger" data-toggle="modal" data-target="#<%=rs.getString("id")%>">Unverified</a>
+                                                            <a class="btn btn-primary" href="verifikasi.jsp?id=<%=rs.getString("id")%>&status=Terima">Terima</a>
+                                                            <a  style="margin-left: 10px;color: white" class="btn btn-danger" data-toggle="modal" data-target="#<%=rs.getString("id")%>">Tolak</a>
                                                         </td>
                                                 <div class="modal fade" id="<%=rs.getString("id")%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
@@ -235,11 +226,11 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <input type="hidden" name="id" value="<%=rs.getString("id")%>">
-                                                                <input type="hidden" name="status" value="unverified">
+                                                                <input type="hidden" name="status" value="Tolak">
                                                                 <textarea type="text" style="width: 100%; height: 150px" name="komentar"></textarea>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button value="submit" type="submit" class="btn btn-primary">Unverified</button>
+                                                                <button value="submit" type="submit" class="btn btn-primary">Submit</button>
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                                                             </div>
                                                         </div>
