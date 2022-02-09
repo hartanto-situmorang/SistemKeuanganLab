@@ -179,7 +179,7 @@
                                                 <tbody>
                                                     <% int i = 1;
                                                         while (rs.next()) {
-                                                            if (rs.getString("ket").equalsIgnoreCase("0")) {
+                                                            if (rs.getString("ket").equalsIgnoreCase("nunggu")) {
                                                     %>
                                                     <tr>
                                                         <td style="text-align: center"><%=i%><% i++;%></td>

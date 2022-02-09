@@ -5,7 +5,7 @@
     String id = request.getParameter("id");
     String status = request.getParameter("status");
     String komentar = request.getParameter("komentar")+" ";
-    String id_notifikasi = "0";
+    String id_notifikasi = null;
     String host = "jdbc:mysql://localhost:3306/sikel_db";
 
     try {
@@ -17,10 +17,10 @@
                     PreparedStatement pst = conn.prepareStatement("update laporan set status='terima' where id='" + id + "'");
                     PreparedStatement pst2 = conn.prepareStatement("INSERT INTO notifikasi_laporan values(?,?,?,?)");
                     pst.executeUpdate();
-                    status = "'terima'";
+                    status = "terima";
                     pst2.setString(1, id);
                     pst2.setString(2, id_notifikasi);
-                    pst2.setString(3, "'"+status+"'");
+                    pst2.setString(3, status);
                     pst2.setString(4, komentar);
                     pst2.executeUpdate();
                     pst.close();
@@ -32,7 +32,7 @@
                     status = "tolak";
                     pst2.setString(1, id);
                     pst2.setString(2, id_notifikasi);
-                    pst2.setString(3, "'"+status+"'");
+                    pst2.setString(3, status);
                     pst2.setString(4, komentar);
                     pst2.executeUpdate();
                     pst.close();
