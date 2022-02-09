@@ -20,7 +20,7 @@
                     status = "terima";
                     pst2.setString(1, id);
                     pst2.setString(2, id_notifikasi);
-                    pst2.setString(3, status);
+                    pst2.setString(3, "'"+status+"'");
                     pst2.setString(4, komentar);
                     pst2.executeUpdate();
                     pst.close();
@@ -32,7 +32,7 @@
                     status = "tolak";
                     pst2.setString(1, id);
                     pst2.setString(2, id_notifikasi);
-                    pst2.setString(3, status);
+                    pst2.setString(3, "'"+status+"'");
                     pst2.setString(4, komentar);
                     pst2.executeUpdate();
                     pst.close();

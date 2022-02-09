@@ -5,7 +5,7 @@
     try {
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn = DriverManager.getConnection(host, "root", "");
-        String query = "select id,id_kalab,nama_barang,jumlah_barang,deskripsi,ket,DATE_FORMAT(tanggal_pengajuan,'%d %M %Y') as tanggal,status from form_pengajuan ORDER by CASE WHEN status = 'penting' THEN 1 WHEN status = 'segera' THEN 2 ELSE 3 END;";
+        String query = "select id,id_kalab,nama_barang,jumlah_barang,deskripsi,ket,DATE_FORMAT(tanggal_pengajuan,'%d %M %Y') as tanggal,status from form_pengajuan ORDER by CASE WHEN ket = 'penting' THEN 1 WHEN ket = 'segera' THEN 2 ELSE 3 END;";
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
         rs = stmt.executeQuery(query);
@@ -179,7 +179,7 @@
                                                 <tbody>
                                                     <% int i = 1;
                                                         while (rs.next()) {
-                                                            if (rs.getString("ket").equalsIgnoreCase("nunggu")) {
+                                                            if (rs.getString("status").equalsIgnoreCase("nunggu")) {
                                                     %>
                                                     <tr>
                                                         <td style="text-align: center"><%=i%><% i++;%></td>
@@ -204,18 +204,18 @@
                                                         <td> <%=rs.getString("deskripsi")%></td>
                                                         <td><p style="color: 
                                                                <%
-                                                                   if (rs.getString("status").equalsIgnoreCase("penting")) {%>
+                                                                   if (rs.getString("ket").equalsIgnoreCase("penting")) {%>
                                                                RED; font-weight: bold
                                                                <%} else {%>
                                                                .bg-gray-800;
                                                                <%  }
                                                                %>
                                                                ">
-                                                                <%=rs.getString("status")%>
+                                                                <%=rs.getString("ket")%>
 
                                                             </p></td>
                                                         <td>
-                                                            <a class="btn btn-primary" href="confirm.jsp?id=<%=rs.getString("id")%>&status=terima">Setujui</a>
+                                                            <a class="btn btn-primary" href="confirm.jsp?id=<%=rs.getString("id")%>&status=terima&nama=<%=rs.getString("nama_barang")%>">Setujui</a>
                                                             <a  style="margin-left: 10px;color: white" class="btn btn-danger" data-toggle="modal" data-target="#<%=rs.getString("id")%>">Tolak</a>
                                                         </td>
                                                     </tr>
@@ -231,7 +231,7 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <input type="hidden" name="id" value="<%=rs.getString("id")%>">
-                                                                <input type="hidden" name="nama_barang" value="<%=rs.getString("nama_barang")%>">
+                                                                <input type="hidden" name="nama" value="<%=rs.getString("nama_barang")%>">
                                                                 <input type="hidden" name="status" value="tolak">
                                                                 <textarea type="text" style="width: 100%; height: 150px" name="komentar"></textarea>
                                                             </div>

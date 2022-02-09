@@ -6,8 +6,9 @@
     String status = request.getParameter("status");
     out.print(status);
     String komentar = request.getParameter("komentar")+" ";
-    String nopengajuan = id + "-" + request.getParameter("nama_barang");
-    String id_notifikasi = "0";
+    String nama = request.getParameter("nama");
+    String nopengajuan = id + "-" + request.getParameter("nama");
+    String id_notifikasi = null ;
     String host = "jdbc:mysql://localhost:3306/sikel_db";
 
     try {
@@ -16,27 +17,27 @@
         if (conn != null) {
             if (id != null) {
                 if (status.equalsIgnoreCase("terima")) {
-                    PreparedStatement pst = conn.prepareStatement("update form_pengajuan set ket=1, status='terima' where id='" + id + "'");
+                    PreparedStatement pst = conn.prepareStatement("update form_pengajuan set status='terima' where id='" + id + "'");
                     PreparedStatement pst2 = conn.prepareStatement("INSERT INTO notifikasi values(?,?,?,?,?)");
                     pst.executeUpdate();
                     status = "terima";
                     pst2.setString(1, id_notifikasi);
                     pst2.setString(2, id);
                     pst2.setString(3, nopengajuan);
-                    pst2.setString(4,  "'"+status+"'");
+                    pst2.setString(4,  status);
                     pst2.setString(5, komentar);
                     pst2.executeUpdate();
                     pst.close();
                     pst2.close();
                 } else if (status.equalsIgnoreCase("tolak")) {
-                    PreparedStatement pst = conn.prepareStatement("update form_pengajuan set ket=2, status='tolak' where id='" + id + "'");
+                    PreparedStatement pst = conn.prepareStatement("update form_pengajuan set status='tolak' where id='" + id + "'");
                     PreparedStatement pst2 = conn.prepareStatement("INSERT INTO notifikasi values(?,?,?,?,?)");
                     pst.executeUpdate();
                     status = "tolak";
                     pst2.setString(1, id_notifikasi);
                     pst2.setString(2, id);
-                    pst2.setString(3, nopengajuan);
-                    pst2.setString(4, "'"+status+"'");
+                    pst2.setString(3, nopengajuan+nama);
+                    pst2.setString(4, status);
                     pst2.setString(5, komentar);
                     pst2.executeUpdate();
                     pst.close();
