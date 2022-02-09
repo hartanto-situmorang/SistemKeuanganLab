@@ -5,7 +5,7 @@
     try {
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn = DriverManager.getConnection(host, "root", "");
-        String query = "select * from form_pengajuan";
+        String query = "select id_kalab,nama_barang,jumlah_barang,deskripsi,ket,DATE_FORMAT(tanggal_pengajuan,'%d %M %Y') as tanggal,status from form_pengajuan";
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
         rs = stmt.executeQuery(query);
@@ -187,7 +187,7 @@
                                                         <td style="text-align: center"><%=i%><% i++;%></td>
                                                         <td>
                                                             <%
-                                                                String query2 = "select * from kalab where id_kalab='" + rs.getString("id_kalab") + "'";
+                                                                String query2 = "select nama_kalab from kalab where id_kalab='" + rs.getString("id_kalab") + "'";
                                                                 Statement stmt2 = conn.createStatement();
                                                                 ResultSet rs2 = null;
                                                                 rs2 = stmt2.executeQuery(query2);
@@ -200,11 +200,22 @@
                                                                 stmt2.close();
                                                             %>
                                                         </td>
-                                                        <td>Komputer i9</td>
-                                                        <td>6</td>
-                                                        <td>2011/04/25</td>
-                                                        <td>$320,800</td>
-                                                        <td><p style="color: red">Penting</p></td>
+                                                        <td> <%=rs.getString("nama_barang")%></td>
+                                                        <td> <%=rs.getString("jumlah_barang")%></td>
+                                                        <td> <%=rs.getString("tanggal")%></td>
+                                                        <td> <%=rs.getString("deskripsi")%></td>
+                                                        <td><p style="color: 
+                                                               <%
+                                                                   if (rs.getString("status").equalsIgnoreCase("penting")) {%>
+                                                               RED; font-weight: bold
+                                                               <%} else {%>
+                                                               .bg-gray-800;
+                                                               <%  }
+                                                               %>
+                                                               ">
+                                                                <%=rs.getString("status")%>
+
+                                                            </p></td>
                                                         <td>
                                                             <a class="btn btn-success">Setujui</a>
                                                             <a class="btn btn-danger">Tolak</a>
@@ -220,8 +231,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /.container-fluid -->
-
                     </div>
                     <!-- End of Main Content -->
 
